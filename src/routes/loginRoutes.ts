@@ -15,8 +15,8 @@ loginRouter.get('/', (_req, res) => {
 
 loginRouter.post('/', async (request, response) => {
   const { body } = request
-  const { username, password } = body
-  const rows = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+  const { email, password } = body
+  const rows = await pool.query('SELECT * FROM users WHERE email = ?', [email]);
 
   let user;
 
@@ -35,7 +35,7 @@ loginRouter.post('/', async (request, response) => {
       console.log(user);
       const userForToken = {
         id: user.id,
-        username: user.username
+        email: user.email
       }
       console.log(userForToken, "----------2---");
       const sec = process.env.SECRET_q
@@ -54,7 +54,7 @@ loginRouter.post('/', async (request, response) => {
         data: {
           user: {
             name: user.name,
-            username: user.username,
+            email: user.email,
             token
 
           }
